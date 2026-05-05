@@ -2,49 +2,21 @@ pipeline {
   agent any
 
   stages {
-    stage('Install Backend') {
+    stage('Check Tools') {
       steps {
-        dir('lab27/backend') {
-          script {
-            if (isUnix()) {
-              sh 'npm ci'
-            } else {
-              bat 'npm ci'
-            }
+        script {
+          if (isUnix()) {
+            sh 'docker --version'
+            sh 'docker compose version'
+          } else {
+            bat 'docker --version'
+            bat 'docker compose version'
           }
         }
       }
     }
 
-    stage('Install Frontend') {
-      steps {
-        dir('lab27/frontend') {
-          script {
-            if (isUnix()) {
-              sh 'npm install --legacy-peer-deps'
-            } else {
-              bat 'npm install --legacy-peer-deps'
-            }
-          }
-        }
-      }
-    }
-
-    stage('Build Frontend') {
-      steps {
-        dir('lab27/frontend') {
-          script {
-            if (isUnix()) {
-              sh 'npm run build'
-            } else {
-              bat 'npm run build'
-            }
-          }
-        }
-      }
-    }
-
-    stage('Docker Compose Build') {
+    stage('Build Docker Images') {
       steps {
         dir('lab27') {
           script {
@@ -52,6 +24,22 @@ pipeline {
               sh 'docker compose build'
             } else {
               bat 'docker compose build'
+            }
+          }
+        }
+      }
+    }
+
+    stage('Start Containers') {
+      steps {
+        dir('lab27') {
+          script {
+            if (isUnix()) {
+              sh 'docker compose up -d'
+              sh 'docker compose ps'
+            } else {
+              bat 'docker compose up -d'
+              bat 'docker compose ps'
             }
           }
         }

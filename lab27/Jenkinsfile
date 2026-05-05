@@ -1,9 +1,45 @@
-﻿pipeline {
+pipeline {
   agent any
+
   stages {
-    stage('Install Backend') { steps { dir('backend') { script { if (isUnix()) { sh 'npm ci' } else { bat 'npm ci' } } } } }
-    stage('Install Frontend') { steps { dir('frontend') { script { if (isUnix()) { sh 'npm install --legacy-peer-deps' } else { bat 'npm install --legacy-peer-deps' } } } } }
-    stage('Build Frontend') { steps { dir('frontend') { script { if (isUnix()) { sh 'npm run build' } else { bat 'npm run build' } } } } }
-    stage('Docker Compose Build') { steps { script { if (isUnix()) { sh 'docker compose build' } else { bat 'docker compose build' } } } }
+    stage('Check Tools') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'docker --version'
+            sh 'docker compose version'
+          } else {
+            bat 'docker --version'
+            bat 'docker compose version'
+          }
+        }
+      }
+    }
+
+    stage('Build Docker Images') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'docker compose build'
+          } else {
+            bat 'docker compose build'
+          }
+        }
+      }
+    }
+
+    stage('Start Containers') {
+      steps {
+        script {
+          if (isUnix()) {
+            sh 'docker compose up -d'
+            sh 'docker compose ps'
+          } else {
+            bat 'docker compose up -d'
+            bat 'docker compose ps'
+          }
+        }
+      }
+    }
   }
 }
