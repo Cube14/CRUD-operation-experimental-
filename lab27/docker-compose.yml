@@ -1,0 +1,35 @@
+﻿services:
+  mongo:
+    image: mongo:7
+    container_name: a27-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: a27-backend
+    environment:
+      PORT: 8000
+      MONGO_URI: mongodb://mongo:27017/myAppDB
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: a27-frontend
+    environment:
+      HOST: 0.0.0.0
+      REACT_APP_API_URL: http://127.0.0.1:8000/api
+      WDS_SOCKET_PORT: 0
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:

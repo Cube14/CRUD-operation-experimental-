@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Form</title>
+</head>
+<body>
+
+<h2>Employee Form</h2>
+
+<form method="post">
+  ID: <input type="text" name="empId"><br><br>
+  Name: <input type="text" name="name"><br><br>
+  Address:<br>
+  <textarea name="address"></textarea><br><br>
+
+  <button formaction="/insert">Insert</button>
+  <button formaction="/update">Update</button>
+  <button formaction="/delete">Delete</button>
+  <button formaction="/select" formmethod="get">Select</button>
+</form>
+
+<hr>
+
+<h3>Employee Records</h3>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Address</th>
+  </tr>
+
+  <% employees.forEach(emp => { %>
+    <tr>
+      <td><%= emp.empId %></td>
+      <td><%= emp.name %></td>
+      <td><%= emp.address %></td>
+    </tr>
+  <% }) %>
+</table>
+
+</body>
+</html>

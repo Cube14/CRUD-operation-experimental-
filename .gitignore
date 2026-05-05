@@ -1,0 +1,20 @@
+node_modules/
+*/node_modules/
+
+build/
+dist/
+*/build/
+*/dist/
+
+.env
+*.env
+!.env.example
+
+.DS_Store
+*.log
+npm-debug.log*
+
+lab27.zip
+
+# Keep the old separate Git assignment repo out of this main project repo.
+git assignment/
