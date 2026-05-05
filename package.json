@@ -4,7 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lab4:q1": "node lab4/q1.js",
+    "lab4:q2": "node lab4/q2.js",
+    "lab4:q3": "node lab4/q3.js",
+    "lab4:q4": "node lab4/q4.js",
+    "lab4:q5": "node lab4/q5.js",
+    "lab7:q1": "node lab7/q1.js",
+    "lab7:q2": "node lab7/q2.js",
+    "lab7:q3": "node lab7/q3.js",
+    "lab7:q4": "node lab7/q4.js",
+    "lab10": "node lab10/app.js",
+    "lab27": "cd lab27 && docker compose up -d",
+    "lab27:down": "cd lab27 && docker compose down",
+    "test": "node --check lab10/app.js && node --check lab7/q1.js && node --check lab7/q2.js && node --check lab7/q3.js && node --check lab7/q4.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +25,7 @@
   "dependencies": {
     "ejs": "^4.0.1",
     "express": "^5.2.1",
-    "mongoose": "^9.2.0"
+    "mongoose": "^9.6.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

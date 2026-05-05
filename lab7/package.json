@@ -4,7 +4,11 @@
   "description": "",
   "main": "q1.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "q1": "node q1.js",
+    "q2": "node q2.js",
+    "q3": "node q3.js",
+    "q4": "node q4.js",
+    "test": "node --check q1.js && node --check q2.js && node --check q3.js && node --check q4.js"
   },
   "keywords": [],
   "author": "",

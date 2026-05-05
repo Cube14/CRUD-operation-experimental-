@@ -1,7 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const app = express();
+const PORT = process.env.PORT || 3010;
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/employeeDB";
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -9,13 +12,12 @@ app.use(express.json());
 
 // EJS setup
 app.set("view engine", "ejs");
-
-// 🔹 MongoDB connection
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/employeeDB";
+app.set("views", path.join(__dirname, "views"));
 
 mongoose.connect(MONGO_URI)
-.then(()=>console.log("MongoDB Connected"))
-.catch(err=>console.log(err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
+
 // Schema
 const employeeSchema = new mongoose.Schema({
   empId: String,
@@ -25,10 +27,10 @@ const employeeSchema = new mongoose.Schema({
 
 const Employee = mongoose.model("Employee", employeeSchema);
 
-// 🔹 HOME PAGE (THIS MUST RENDER EJS)
+// Home page renders the employee form and records.
 app.get("/", async (req, res) => {
   const employees = await Employee.find();
-  res.render("employee", { employees });   // ✅ NOT res.send
+  res.render("employee", { employees });
 });
 
 // INSERT
@@ -59,6 +61,6 @@ app.get("/select", async (req, res) => {
 });
 
 // Server
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Lab 10 server running at http://localhost:${PORT}`);
 });

@@ -1,26 +1,27 @@
 const express = require("express");
+
 const app = express();
+const PORT = process.env.PORT || 3004;
 
-app.use(express.json()); // to read JSON body
+app.use(express.json());
 
-// 1️⃣ URL Params
+// URL params
 app.get("/user/:name", (req, res) => {
   res.send("Hello " + req.params.name);
 });
 
-// 2️⃣ Query Params
+// Query params
 app.get("/search", (req, res) => {
   res.send("Search for: " + req.query.q);
 });
 
-// 3️⃣ Receive data from body (POST)
+// JSON request body
 app.post("/login", (req, res) => {
   const username = req.body.username;
   res.send("Logged in user: " + username);
 });
 
- // Sending data as JSON Response
-
+// JSON response
 app.get("/data", (req, res) => {
   res.json({
     application: "Express App",
@@ -29,6 +30,6 @@ app.get("/data", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Q4 server running on http://localhost:${PORT}`);
 });
