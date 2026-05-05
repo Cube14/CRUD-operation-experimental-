@@ -4,13 +4,15 @@ pipeline {
   stages {
     stage('Check Tools') {
       steps {
+        echo 'NEW FILE LOADED'
+
         script {
           if (isUnix()) {
             sh 'docker --version'
-            sh 'docker compose version'
+            sh 'docker-compose --version'
           } else {
             bat 'docker --version'
-            bat 'docker compose version'
+            bat 'docker-compose --version'
           }
         }
       }
@@ -21,9 +23,9 @@ pipeline {
         dir('lab27') {
           script {
             if (isUnix()) {
-              sh 'docker compose build'
+              sh 'docker-compose build'
             } else {
-              bat 'docker compose build'
+              bat 'docker-compose build'
             }
           }
         }
@@ -35,11 +37,11 @@ pipeline {
         dir('lab27') {
           script {
             if (isUnix()) {
-              sh 'docker compose up -d'
-              sh 'docker compose ps'
+              sh 'docker-compose up -d'
+              sh 'docker-compose ps'
             } else {
-              bat 'docker compose up -d'
-              bat 'docker compose ps'
+              bat 'docker-compose up -d'
+              bat 'docker-compose ps'
             }
           }
         }
